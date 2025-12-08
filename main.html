@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download AWA for Windows</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Segoe UI (Microsoft style) -->
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ms-bg: #f5f5f7;
+            --ms-nav: #ffffff;
+            --ms-primary: #6264A7;     /* Teams purple */
+            --ms-primary-dark: #4B4E9A;
+            --ms-text: #1b1b1f;
+            --ms-muted: #5f5f67;
+            --ms-card: #ffffff;
+            --ms-border: #dedee5;
+        }
+
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            background: var(--ms-bg);
+            color: var(--ms-text);
+        }
+
+        /* Top navigation */
+        .nav {
+            background: var(--ms-nav);
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--ms-border);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--ms-primary);
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Main hero */
+        .hero {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .hero-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--ms-muted);
+            max-width: 480px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            background: var(--ms-primary);
+            color: white;
+            margin-top: 26px;
+            text-decoration: none;
+            transition: background .2s ease, transform .1s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--ms-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .hero-img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Features section */
+        .section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 28px;
+        }
+
+        .sec-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .feature-card {
+            background: var(--ms-card);
+            padding: 22px;
+            border-radius: 10px;
+            border: 1px solid var(--ms-border);
+        }
+
+        .feat-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feat-text {
+            font-size: 14px;
+            color: var(--ms-muted);
+            line-height: 1.6;
+        }
+
+        /* System requirements */
+        .req-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--ms-border);
+            background: #ffffff;
+        }
+
+        .req-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .req-list {
+            color: var(--ms-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--ms-muted);
+            padding: 24px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <div class="nav">
+        <div class="logo">AWA</div>
+        <div class="nav-title">Download Center</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div>
+            <div class="hero-title">Download AWA for Windows</div>
+            <div class="hero-sub">
+                AWA is a streamlined automation assistant designed to enhance workflow efficiency and reduce repetitive tasks.
+            </div>
+
+            <a class="download-btn" href="DOWNLOAD_LINK.exe">
+                ⬇ Download for Windows
+            </a>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section">
+        <div class="sec-title">Key Features</div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feat-title">Automation Tools</div>
+                <div class="feat-text">
+                    Execute routine tasks quickly and consistently with customizable actions.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feat-title">Clean & Simple UI</div>
+                <div class="feat-text">
+                    Designed with clarity and usability in mind, offering a seamless user experience.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feat-title">Continuous Improvements</div>
+                <div class="feat-text">
+                    Regular enhancements ensure the application stays modern and efficient.
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements -->
+        <div class="req-box">
+            <div class="req-title">System Requirements</div>
+            <div class="req-list">
+                • Windows 10 or Windows 11 (64-bit)<br>
+                • 4 GB RAM recommended<br>
+                • Internet connection for updates
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        © 2025 AWA — All rights reserved.
+    </div>
+
+</body>
+</html>
