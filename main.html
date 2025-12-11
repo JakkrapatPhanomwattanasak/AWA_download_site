@@ -123,15 +123,20 @@
         }
 
         .nav-cta {
-            padding: 7px 16px;
+            padding: 6px 18px;              /* ลด padding ให้เตี้ยลง */
             border-radius: 999px;
             background: linear-gradient(135deg, var(--ms-primary), var(--ms-primary-soft));
             color: #fff;
-            font-size: 13px;
+            font-size: 13px;                /* ตัวอักษรเล็กลงนิดนึง */
+            line-height: 1;                 /* ทำให้สูงพอดี */
             font-weight: 600;
             text-decoration: none;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            display: inline-flex;
+            align-items: center;            /* จัดให้ตัวหนังสืออยู่กลางปุ่ม */
+            justify-content: center;
         }
+
 
         .nav-cta:hover {
             filter: brightness(1.08);
@@ -391,22 +396,26 @@
         }
 
         .hero-window-tabs {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));  /* แบ่ง 3 ช่องเท่ากัน */
             gap: 8px;
             font-size: 11px;
         }
-
+        
         .hero-window-tab {
-            padding: 4px 9px;
+            padding: 6px 10px;
             border-radius: 999px;
             background: rgba(15, 23, 42, 0.65);
             color: #c7d2fe;
+            text-align: center;             /* ตัวหนังสืออยู่กลางกล่อง */
+            white-space: nowrap;
         }
-
+        
         .hero-window-tab.active {
             background: rgba(99, 102, 241, 0.95);
             color: #e5e7eb;
         }
+
 
         .hero-window-dots {
             display: flex;
@@ -943,4 +952,5 @@
 
 </body>
 </html>
+
 
