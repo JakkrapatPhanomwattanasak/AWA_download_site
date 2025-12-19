@@ -1,947 +1,566 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <title>AWA – Microsoft Teams Assistant for Teachers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWA — Auto Writing Assistant for Modern Teachers</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Segoe UI -->
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-        :root {
-            --ms-bg: #0b1020;
-            --ms-bg-soft: #111827;
-            --ms-nav: #0b1020;
-            --ms-primary: #6264a7;      /* Teams purple */
-            --ms-primary-soft: #7b83eb;
-            --ms-primary-dark: #4b4e9a;
-            --ms-accent: #36cfc9;
-            --ms-card: #111827;
-            --ms-card-soft: #151b2f;
-            --ms-border: rgba(255, 255, 255, 0.06);
-            --ms-text: #f9fafb;
-            --ms-muted: #9ca3af;
-            --radius-lg: 18px;
-            --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(98, 100, 167, 0.65), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(54, 207, 201, 0.4), transparent 55%),
-                var(--ms-bg);
-            color: var(--ms-text);
-        }
-
-        a {
-            color: inherit;
-        }
-
-        /* NAV BAR */
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(14px);
-            background: linear-gradient(to right, rgba(11,16,32,0.98), rgba(11,16,32,0.9));
-            border-bottom: 1px solid var(--ms-border);
-            padding: 10px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-logo-img {
-            width: 32px;
-            height: 32px;
-            border-radius: 999px;
-            background: radial-gradient(circle at 30% 0%, #7ee0ff, #0b3a6f 55%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .nav-logo-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .nav-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .nav-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .nav-subtitle {
-            font-size: 11px;
-            color: var(--ms-muted);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            font-size: 14px;
-            color: var(--ms-muted);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            position: relative;
-            padding-bottom: 2px;
-        }
-
-        .nav-links a:hover::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            height: 2px;
-            width: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--ms-primary-soft), var(--ms-accent));
-        }
-
-        .nav-cta {
-            padding: 7px 16px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, var(--ms-primary), var(--ms-primary-soft));
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .nav-cta:hover {
-            filter: brightness(1.08);
-        }
-
-        @media (max-width: 840px) {
-            .nav {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .nav-links {
-                flex-wrap: wrap;
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                container: {
+                    center: true,
+                    padding: "2rem",
+                    screens: { "2xl": "1400px" },
+                },
+                extend: {
+                    fontFamily: {
+                        sans: ['Sarabun', 'Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                        success: {
+                            DEFAULT: "hsl(var(--success))",
+                            foreground: "hsl(var(--success-foreground))",
+                        }
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                    backgroundImage: {
+                        'gradient-hero': "linear-gradient(135deg, hsl(243 35% 52%) 0%, hsl(243 45% 40%) 100%)",
+                        'gradient-overlay': "linear-gradient(180deg, hsla(243 35% 20% / 0.7) 0%, hsla(243 35% 10% / 0.85) 100%)",
+                    },
+                    boxShadow: {
+                        'soft': "0 4px 20px -2px hsla(243 35% 20% / 0.1)",
+                        'card': "0 8px 30px -4px hsla(243 35% 20% / 0.12)",
+                        'glow': "0 0 40px hsla(243 35% 52% / 0.3)",
+                    }
+                }
             }
         }
+    </script>
 
-        /* LAYOUT WRAPPER */
-        .page {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 32px 22px 56px;
-        }
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --background: 220 20% 97%;
+                --foreground: 230 25% 18%;
+                
+                --card: 0 0% 100%;
+                --card-foreground: 230 25% 18%;
+                
+                --primary: 243 35% 52%;
+                --primary-foreground: 0 0% 100%;
+                
+                --secondary: 243 30% 96%;
+                --secondary-foreground: 243 35% 35%;
+                
+                --muted: 220 15% 94%;
+                --muted-foreground: 220 10% 45%;
+                
+                --accent: 243 45% 58%;
+                --accent-foreground: 0 0% 100%;
+                
+                --destructive: 0 84% 60%;
+                --destructive-foreground: 0 0% 100%;
+                
+                --success: 142 70% 45%;
+                --success-foreground: 0 0% 100%;
 
-        /* HERO */
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
-            gap: 40px;
-            align-items: center;
-        }
-
-        @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: minmax(0, 1fr);
+                --border: 220 15% 90%;
+                --input: 220 15% 90%;
+                --ring: 243 35% 52%;
+                
+                --radius: 0.75rem;
             }
         }
-
-        .pill-row {
-            display: inline-flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-        }
-
-        .pill {
-            font-size: 11px;
-            padding: 5px 11px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.6);
-            color: var(--ms-muted);
-            background: rgba(15,23,42,0.7);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .pill-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 999px;
-            background: var(--ms-accent);
-        }
-
-        .hero-title {
-            font-size: 38px;
-            font-weight: 650;
-            letter-spacing: 0.01em;
-            margin: 0 0 10px;
-        }
-
-        .hero-gradient {
-            background: linear-gradient(120deg, #e5e7ff, #8be9ff);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .hero-sub {
-            font-size: 15px;
-            color: var(--ms-muted);
-            max-width: 480px;
-            line-height: 1.7;
-        }
-
-        .hero-meta {
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--ms-muted);
-        }
-
-        .hero-meta strong {
-            color: #e5e7eb;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 26px;
-            align-items: center;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 13px 24px;
-            border-radius: 999px;
-            border: none;
-            background: linear-gradient(135deg, var(--ms-primary), var(--ms-primary-soft));
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.7);
-            transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-        }
-
-        .download-btn span.small {
-            font-size: 11px;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        .download-btn:hover {
-            filter: brightness(1.07);
-            transform: translateY(-1px);
-            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.85);
-        }
-
-        .secondary-link {
-            font-size: 13px;
-            color: var(--ms-muted);
-            text-decoration: none;
-        }
-
-        .secondary-link:hover {
-            color: #e5e7eb;
-        }
-
-        /* HERO RIGHT – PRODUCT VISUAL */
-        .hero-visual-wrapper {
-            position: relative;
-        }
-
-        .hero-orbit {
-            position: absolute;
-            inset: -40px;
-            border-radius: 999px;
-            background:
-                radial-gradient(circle at 10% 0%, rgba(54, 207, 201, 0.12), transparent 60%),
-                radial-gradient(circle at 90% 100%, rgba(98, 100, 167, 0.55), transparent 60%);
-            opacity: 0.9;
-            filter: blur(6px);
-            z-index: -1;
-        }
-
-        .hero-card {
-            background: radial-gradient(circle at 0% 0%, rgba(148, 163, 255, 0.22), rgba(15, 23, 42, 0.96));
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(148, 163, 255, 0.22);
-            box-shadow: var(--shadow-soft);
-            padding: 18px 18px 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-        }
-
-        .hero-badge {
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(148, 163, 255, 0.45);
-            color: #e5e7eb;
-        }
-
-        .hero-card-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .hero-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 999px;
-            background: rgba(148, 163, 255, 0.9);
-        }
-
-        .hero-main {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 16px;
-            align-items: stretch;
-        }
-
-        @media (max-width: 900px) {
-            .hero-main {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .hero-list {
-            font-size: 12px;
-            color: var(--ms-muted);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .hero-list-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 7px 9px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(55, 65, 81, 0.8);
-        }
-
-        .hero-list-row strong {
-            font-size: 12px;
-            color: #e5e7eb;
-        }
-
-        .hero-tag {
-            font-size: 11px;
-            color: var(--ms-muted);
-        }
-
-        .hero-screenshot {
-            position: relative;
-            border-radius: 14px;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 0% 0%, rgba(148, 163, 255, 0.6), transparent 60%),
-                radial-gradient(circle at 100% 100%, rgba(54, 207, 201, 0.5), transparent 60%),
-                linear-gradient(145deg, #020617, #020617);
-            border: 1px solid rgba(148, 163, 255, 0.5);
-        }
-
-        .hero-screenshot-inner {
-            padding: 14px 12px 10px;
-        }
-
-        .hero-window-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .hero-window-tabs {
-            display: flex;
-            gap: 8px;
-            font-size: 11px;
-        }
-
-        .hero-window-tab {
-            padding: 4px 9px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.65);
-            color: #c7d2fe;
-        }
-
-        .hero-window-tab.active {
-            background: rgba(99, 102, 241, 0.95);
-            color: #e5e7eb;
-        }
-
-        .hero-window-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .hero-window-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 999px;
-            background: rgba(15,23,42,0.5);
-        }
-
-        .hero-window-body {
-            font-size: 11px;
-            color: #e5e7eb;
-            line-height: 1.5;
-        }
-
-        .hero-window-highlight {
-            margin-top: 8px;
-            padding: 8px 10px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px dashed rgba(148, 163, 255, 0.6);
-        }
-
-        .hero-logo-watermark {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 86px;
-            height: 86px;
-            opacity: 0.22;
-            filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.9));
-        }
-
-        .hero-logo-watermark img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* TRUST BAR */
-        .trust-row {
-            margin-top: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            font-size: 12px;
-            color: var(--ms-muted);
-        }
-
-        .trust-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .trust-bullet {
-            width: 18px;
-            height: 18px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 255, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: var(--ms-primary-soft);
-        }
-
-        /* SECTION WRAPPER */
-        .section {
-            margin-top: 64px;
-        }
-
-        .sec-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 16px;
-            margin-bottom: 22px;
-        }
-
-        .sec-title {
-            font-size: 22px;
-            font-weight: 600;
-        }
-
-        .sec-sub {
-            font-size: 13px;
-            color: var(--ms-muted);
-            max-width: 360px;
-        }
-
-        /* FEATURES GRID */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .feature-card {
-            background: linear-gradient(145deg, rgba(15,23,42,0.96), rgba(30,64,175,0.85));
-            border-radius: var(--radius-lg);
-            padding: 18px 18px 16px;
-            border: 1px solid rgba(129, 140, 248, 0.4);
-            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.7);
-        }
-
-        .feature-icon {
-            width: 26px;
-            height: 26px;
-            border-radius: 999px;
-            background: rgba(30, 64, 175, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        .feat-title {
-            font-size: 16px;
-            margin-top: 10px;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .feat-text {
-            font-size: 13px;
-            color: #d1d5db;
-            line-height: 1.7;
-        }
-
-        .feat-tagline {
-            margin-top: 10px;
-            font-size: 11px;
-            color: var(--ms-muted);
-        }
-
-        /* HOW IT WORKS */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .step-card {
-            background: var(--ms-card-soft);
-            border-radius: var(--radius-lg);
-            padding: 18px 18px 16px;
-            border: 1px solid var(--ms-border);
-        }
-
-        .step-number {
-            font-size: 12px;
-            color: var(--ms-muted);
-            margin-bottom: 6px;
-        }
-
-        .step-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .step-text {
-            font-size: 13px;
-            color: var(--ms-muted);
-            line-height: 1.6;
-        }
-
-        /* CTA / DOWNLOAD SECTION */
-        .download-section {
-            margin-top: 64px;
-            padding: 22px 20px 20px;
-            border-radius: var(--radius-lg);
-            background: radial-gradient(circle at 0% 0%, rgba(129, 140, 248, 0.4), rgba(37, 99, 235, 0.9));
-            border: 1px solid rgba(191, 219, 254, 0.35);
-            box-shadow: var(--shadow-soft);
-            display: grid;
-            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-            gap: 18px;
-            align-items: center;
-        }
-
-        @media (max-width: 820px) {
-            .download-section {
-                grid-template-columns: minmax(0, 1fr);
-            }
-        }
-
-        .download-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .download-sub {
-            font-size: 13px;
-            color: #e5e7eb;
-        }
-
-        .download-meta {
-            font-size: 11px;
-            color: #e5e7eb;
-            margin-top: 10px;
-        }
-
-        .download-meta span {
-            opacity: 0.85;
-        }
-
-        .download-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .download-secondary {
-            font-size: 11px;
-            color: #e5e7eb;
-        }
-
-        .download-secondary code {
-            background: rgba(15, 23, 42, 0.35);
-            border-radius: 6px;
-            padding: 2px 6px;
-            font-size: 10px;
-        }
-
-        /* FOOTER */
-        .footer {
-            margin-top: 52px;
-            text-align: center;
-            font-size: 11px;
-            color: var(--ms-muted);
-            padding-bottom: 10px;
-        }
-
-        .footer a {
-            color: var(--ms-muted);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            color: #e5e7eb;
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
     </style>
 </head>
-<body>
+<body class="bg-background text-foreground font-sans antialiased">
 
-    <!-- NAV -->
-    <header class="nav">
-        <div class="nav-left">
-            <div class="nav-logo-img">
-                <!-- ใช้โลโก้ที่แนบมา: เซฟเป็น awa-logo.png -->
-                <img src="awa-logo.png" alt="AWA logo" />
-            </div>
-            <div class="nav-brand">
-                <div class="nav-title">AWA</div>
-                <div class="nav-subtitle">Assistant for Teams Assignments</div>
-            </div>
-        </div>
-        <div class="nav-links">
-            <a href="#overview">Overview</a>
-            <a href="#features">Features</a>
-            <a href="#workflow">For Teachers</a>
-            <a href="#download">Download</a>
-            <a class="nav-cta" href="#download">Get AWA</a>
-        </div>
-    </header>
-
-    <main class="page">
-        <!-- HERO -->
-        <section class="hero" id="overview">
-            <div>
-                <div class="pill-row">
-                    <div class="pill">
-                        <span class="pill-dot"></span>
-                        Built for Microsoft Teams workflows
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center shadow-glow">
+                        <span class="text-primary-foreground font-bold text-sm">A</span>
                     </div>
-                    <div class="pill">
-                        ⚙️ Windows desktop app
-                    </div>
+                    <span class="text-xl font-bold text-foreground">AWA</span>
                 </div>
 
-                <h1 class="hero-title">
-                    Automate your<br />
-                    <span class="hero-gradient">assignment checking</span>
-                    in Teams.
-                </h1>
-
-                <p class="hero-sub">
-                    AWA helps teachers and TAs review, download and check student work
-                    from Microsoft Teams – faster, safer, and with less manual clicking.
-                    Designed for large classes and repetitive grading flows.
-                </p>
-
-                <div class="hero-meta">
-                   <Strong>Runs on your PC alongside Microsoft Teams.</Strong>
-                </div>
-
-                <div class="hero-actions">
-                    <a class="download-btn"
-                       href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.3/AWA_Setup_v1.1.3.exe">
-                        ⬇ Download for Windows
-                        <span class="small">v1.1.3 · 64-bit installer</span>
-                    </a>
-                    <a class="secondary-link" href="#download">View version &amp; system requirements →</a>
-                </div>
-
-                <div class="trust-row">
-                    <div class="trust-item">
-                        <div class="trust-bullet">1</div>
-                        <span>Optimized for Microsoft Teams classes</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-bullet">2</div>
-                        <span>Keeps teacher in full control of the workflow</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-bullet">3</div>
-                        <span>Designed and tested in real university courses</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- HERO PRODUCT VISUAL -->
-            <div class="hero-visual-wrapper" aria-hidden="true">
-                <div class="hero-orbit"></div>
-                <div class="hero-card">
-                    <div class="hero-card-header">
-                        <div class="hero-badge">Teacher view</div>
-                        <div class="hero-card-dots">
-                            <div class="hero-dot"></div>
-                            <div class="hero-dot"></div>
-                            <div class="hero-dot"></div>
-                        </div>
-                    </div>
-                    <div class="hero-main">
-                        <div class="hero-list">
-                            <div class="hero-list-row">
-                                <div>
-                                    <strong>Assignments synced</strong><br />
-                                    <span class="hero-tag">Microsoft Teams → AWA workspace</span>
-                                </div>
-                                <div>37</div>
-                            </div>
-
-                            <div class="hero-list-row">
-                                <div>
-                                    <strong>Students processed</strong><br />
-                                    <span class="hero-tag">Automatic download &amp; status check</span>
-                                </div>
-                                <div>1,240</div>
-                            </div>
-
-                            <div class="hero-list-row">
-                                <div>
-                                    <strong>Time saved</strong><br />
-                                    <span class="hero-tag">Compared with manual clicking</span>
-                                </div>
-                                <div>-73%</div>
-                            </div>
-                        </div>
-
-                        <div class="hero-screenshot">
-                            <div class="hero-screenshot-inner">
-                                <div class="hero-window-bar">
-                                    <div class="hero-window-tabs">
-                                        <div class="hero-window-tab active">Teams class</div>
-                                        <div class="hero-window-tab">Submissions</div>
-                                        <div class="hero-window-tab">Feedback</div>
-                                    </div>
-                                    <div class="hero-window-dots">
-                                        <div class="hero-window-dot"></div>
-                                        <div class="hero-window-dot"></div>
-                                        <div class="hero-window-dot"></div>
-                                    </div>
-                                </div>
-                                <div class="hero-window-body">
-                                    AWA monitors your assignment in Teams, downloads the latest submissions,
-                                    and opens them in your preferred tools. You stay in control of grading –
-                                    AWA just removes the repetitive steps.
-                                    <div class="hero-window-highlight">
-                                        ✅ Connect to Teams<br />
-                                        ✅ Choose assignment<br />
-                                        ✅ Let AWA handle the boring clicks
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- subtle watermark logo -->
-                            <div class="hero-logo-watermark">
-                                <img src="awa-logo.png" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FEATURES -->
-        <section class="section" id="features">
-            <div class="sec-header">
-                <div>
-                    <h2 class="sec-title">Why teachers use AWA</h2>
-                </div>
-                <p class="sec-sub">
-                    AWA focuses on the parts of your workflow that computers are good at:
-                    repetitive navigation, downloading files, and preparing everything for you
-                    to review.
-                </p>
-            </div>
-
-            <div class="feature-grid">
-                <article class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feat-title">Automation that feels natural</h3>
-                    <p class="feat-text">
-                        No need to learn a complex automation platform. AWA simply follows the path you would
-                        take in Microsoft Teams: open a class, choose an assignment, collect submissions, and
-                        prepare them for checking.
-                    </p>
-                    <p class="feat-tagline">
-                        Built for real-world teaching loads, not just demos.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3 class="feat-title">Designed for classrooms</h3>
-                    <p class="feat-text">
-                        Works well with large numbers of students, repeated assignments, and tight feedback
-                        deadlines. Use it alongside your existing grading process – including AI-powered
-                        suggestions if you choose.
-                    </p>
-                    <p class="feat-tagline">
-                        Ideal for university courses, language classes, and project-based learning.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feat-title">Control &amp; transparency</h3>
-                    <p class="feat-text">
-                        AWA runs on your own Windows device and keeps you in the loop for every step. You see
-                        exactly which assignments are processed and can always stop, pause, or adjust the flow.
-                    </p>
-                    <p class="feat-tagline">
-                        You decide how much automation you want – AWA never grades students without you.
-                    </p>
-                </article>
-            </div>
-        </section>
-
-        <!-- HOW IT FITS INTO YOUR WORKFLOW -->
-        <section class="section" id="workflow">
-            <div class="sec-header">
-                <div>
-                    <h2 class="sec-title">How AWA fits into your Teams workflow</h2>
-                </div>
-                <p class="sec-sub">
-                    Keep using Teams as your main hub. AWA just speeds up the journey from “assignment published”
-                    to “feedback returned”.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <article class="step-card">
-                    <div class="step-number">Step 1</div>
-                    <h3 class="step-title">Select a class &amp; assignment</h3>
-                    <p class="step-text">
-                        Log in with your existing Microsoft account, open the Teams class you already use, and
-                        pick the assignment you want to process. AWA understands the standard Teams layout.
-                    </p>
-                </article>
-
-                <article class="step-card">
-                    <div class="step-number">Step 2</div>
-                    <h3 class="step-title">AWA handles the repetitive clicks</h3>
-                    <p class="step-text">
-                        AWA navigates, downloads, and organizes submissions on your computer. You can keep an eye
-                        on the progress while you prepare your feedback or plan the next lesson.
-                    </p>
-                </article>
-
-                <article class="step-card">
-                    <div class="step-number">Step 3</div>
-                    <h3 class="step-title">You review &amp; return feedback</h3>
-                    <p class="step-text">
-                        Open student work in Word, PDF, or your preferred tools. Optionally, combine AWA with
-                        AI-assisted suggestions for comments—while you stay in full control of the final grade.
-                    </p>
-                </article>
-            </div>
-        </section>
-
-        <!-- DOWNLOAD / CTA -->
-        <section class="download-section" id="download">
-            <div>
-                <h2 class="download-title">Download AWA for Windows</h2>
-                <p class="download-sub">
-                    Ready to try AWA with your own class? Install the desktop app, log in with your Microsoft
-                    account, and start automating your Teams assignment workflow in minutes.
-                </p>
-                <div class="download-meta">
-                    <strong>Current version:</strong> <span>v1.1.3</span> ·
-                    <strong>Platform:</strong> <span>Windows 10 / 11 (64-bit)</span> ·
-                    <strong>Language:</strong> <span>English / Thai</span>
-                </div>
-            </div>
-
-            <div class="download-actions">
-                <a class="download-btn"
-                   href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.3/AWA_Setup_v1.1.3.exe">
-                    ⬇ Download AWA installer
-                    <span class="small">From GitHub Releases (official build)</span>
+                <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.3/AWA_Setup_v1.1.3.exe" 
+                   class="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 shadow-soft">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Download
                 </a>
-                <p class="download-secondary">
-                    After download, double-click the installer and follow the steps.<br />
-                    For manual checksums or offline install instructions, see the README
-                    in the same GitHub release.
-                </p>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                 style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop');">
+            </div>
+            
+            <div class="absolute inset-0 bg-gradient-overlay"></div>
+            
+            <div class="relative z-10 container mx-auto px-4 py-20 text-center mt-10">
+                <div class="max-w-4xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-8">
+                        <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+                        <span class="text-primary-foreground text-sm font-medium">
+                            Works with Microsoft Teams
+                        </span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+                        <span class="text-indigo-300">AWA</span> — Auto Writing
+                        <br />
+                        <span class="text-primary-foreground/90">Assistant for Modern Teachers</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                        Grading assignments will never be a burden again.<br />
+                        Save more than <span class="text-indigo-300 font-semibold">70%</span> of your grading time.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                        <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.3/AWA_Setup_v1.1.3.exe"
+                           class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-14 px-8 py-6 shadow-glow duration-300">
+                            <i data-lucide="download" class="mr-2 h-5 w-5"></i>
+                            Download Free v1.1.3
+                        </a>
+                        <button onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' })"
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-primary-foreground/20 text-primary-foreground/90 bg-white/20 hover:bg-white/30 backdrop-blur-sm h-14 px-8 py-6 duration-300">
+                            View All Features
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-6 text-primary-foreground/70">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="h-5 w-5 text-success"></i>
+                            <span class="text-sm">Easy to Use</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="h-5 w-5 text-success"></i>
+                            <span class="text-sm">Secure Data</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="h-5 w-5 text-success"></i>
+                            <span class="text-sm">100% Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                <div class="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex justify-center pt-2">
+                    <div class="w-1 h-3 bg-primary-foreground/50 rounded-full"></div>
+                </div>
             </div>
         </section>
 
-        <footer class="footer">
-            © 2025 AWA — All rights reserved · Built for educators who live inside
-            Microsoft Teams.
-        </footer>
+        <section class="py-20 bg-background">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-4 py-1.5 bg-secondary text-secondary-foreground rounded-full text-sm font-medium mb-4">
+                            Common Challenges
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                            💡 Problems <span class="bg-clip-text text-transparent bg-gradient-hero">AWA</span> Solves
+                        </h2>
+                        <p class="text-muted-foreground text-lg">
+                            Have you experienced these issues?
+                        </p>
+                    </div>
+
+                    <div class="grid gap-4 mb-12">
+                        <div class="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-10 h-10 bg-destructive/10 rounded-lg flex items-center justify-center">
+                                <i data-lucide="users" class="h-5 w-5 text-destructive"></i>
+                            </div>
+                            <p class="text-foreground font-medium">Too many students → Can't keep up with grading</p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-10 h-10 bg-destructive/10 rounded-lg flex items-center justify-center">
+                                <i data-lucide="clock" class="h-5 w-5 text-destructive"></i>
+                            </div>
+                            <p class="text-foreground font-medium">Written assignments take too long to grade</p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-10 h-10 bg-destructive/10 rounded-lg flex items-center justify-center">
+                                <i data-lucide="alert-circle" class="h-5 w-5 text-destructive"></i>
+                            </div>
+                            <p class="text-foreground font-medium">Hard to give detailed and fair feedback to everyone</p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-10 h-10 bg-destructive/10 rounded-lg flex items-center justify-center">
+                                <i data-lucide="file-question" class="h-5 w-5 text-destructive"></i>
+                            </div>
+                            <p class="text-foreground font-medium">Downloading files one by one → Time-consuming</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-hero rounded-2xl p-8 text-center shadow-glow">
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-4">
+                            <i data-lucide="check-circle-2" class="h-8 w-8 text-success"></i>
+                            <h3 class="text-2xl font-bold text-primary-foreground">
+                                AWA solves all of this in one click
+                            </h3>
+                        </div>
+                        <p class="text-primary-foreground/80">
+                            No complex installation. No learning curve. Start using it immediately.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-muted/50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+                            How It Works
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                            🚀 How AWA Works
+                        </h2>
+                        <p class="text-muted-foreground text-lg">
+                            Simple steps that make grading effortless
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">1</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="log-in" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">Sign in to Teams</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">AWA automatically loads student names and assignments</p>
+                        </div>
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">2</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="eye" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">View assignments</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">No searching, no multiple windows needed, organized view</p>
+                        </div>
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">3</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="file-text" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">Read all file types</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Photos, PDFs, scanned documents — all formatted for easy reading</p>
+                        </div>
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">4</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="brain" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">AI-powered analysis</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Provides scores, summarizes strengths, weaknesses, and tips</p>
+                        </div>
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">5</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="check-square" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">Review and adjust</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Modify, edit, or add scores before final submission</p>
+                        </div>
+                        <div class="relative bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1 group">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shadow-glow">6</div>
+                            <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+                                <i data-lucide="zap" class="h-7 w-7 text-primary"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">Save 70%+ time</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Free up your time for what matters most</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-background">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-4 py-1.5 bg-secondary text-secondary-foreground rounded-full text-sm font-medium mb-4">
+                            Key Features
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                            ⭐ What Makes AWA Stand Out
+                        </h2>
+                        <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+                            Designed specifically for teachers. Easy to use, excellent results.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20 group">
+                            <div class="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="user-check" class="h-7 w-7"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">✔ Easy as a personal assistant</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Just enter your Teams email and password — the system handles everything</p>
+                        </div>
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20 group">
+                            <div class="w-14 h-14 bg-accent/10 text-accent rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="file-image" class="h-7 w-7"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">✔ Reads all file formats</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Even phone photos or multi-page PDFs</p>
+                        </div>
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20 group">
+                            <div class="w-14 h-14 bg-success/10 text-success rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="message-square" class="h-7 w-7"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">✔ Professional feedback</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">Clear, readable, personalized — adjustable by grade level</p>
+                        </div>
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20 group">
+                            <div class="w-14 h-14 bg-destructive/10 text-destructive rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="heart" class="h-7 w-7"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">✔ Reduces teacher stress</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">No rushing, no fear of backlog</p>
+                        </div>
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft transition-all duration-300 hover:shadow-card hover:border-primary/20 group">
+                            <div class="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="shield" class="h-7 w-7"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-foreground mb-2">✔ Keeps data secure</h3>
+                            <p class="text-muted-foreground text-sm leading-relaxed">All data stays on your computer only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-muted/50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-4 py-1.5 bg-success/10 text-success rounded-full text-sm font-medium mb-4">
+                            Proven Results
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                            📊 Results Teachers Can Expect
+                        </h2>
+                        <p class="text-muted-foreground text-lg">
+                            Numbers that prove AWA's effectiveness
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft flex items-start gap-4 transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center shadow-glow">
+                                <span class="text-primary-foreground font-bold text-lg">3-5x</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="trending-up" class="h-5 w-5 text-primary"></i>
+                                    <h3 class="text-lg font-semibold text-foreground">3–5x Faster Grading</h3>
+                                </div>
+                                <p class="text-muted-foreground text-sm leading-relaxed">Grade 40 students in under 10 minutes</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft flex items-start gap-4 transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center shadow-glow">
+                                <span class="text-primary-foreground font-bold text-lg">100%</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="message-circle" class="h-5 w-5 text-primary"></i>
+                                    <h3 class="text-lg font-semibold text-foreground">Quality Feedback</h3>
+                                </div>
+                                <p class="text-muted-foreground text-sm leading-relaxed">Every student gets equally detailed recommendations</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft flex items-start gap-4 transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center shadow-glow">
+                                <span class="text-primary-foreground font-bold text-lg">70%</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="clock" class="h-5 w-5 text-primary"></i>
+                                    <h3 class="text-lg font-semibold text-foreground">More Free Time</h3>
+                                </div>
+                                <p class="text-muted-foreground text-sm leading-relaxed">Eliminate repetitive, time-consuming tasks</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-card rounded-2xl p-6 border border-border shadow-soft flex items-start gap-4 transition-all duration-300 hover:shadow-card hover:border-primary/20">
+                            <div class="flex-shrink-0 w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center shadow-glow">
+                                <span class="text-primary-foreground font-bold text-lg">✓</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i data-lucide="graduation-cap" class="h-5 w-5 text-primary"></i>
+                                    <h3 class="text-lg font-semibold text-foreground">Real Student Growth</h3>
+                                </div>
+                                <p class="text-muted-foreground text-sm leading-relaxed">Meaningful feedback, not just scores</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-gradient-hero relative overflow-hidden">
+             <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-10 left-10 w-40 h-40 border border-primary-foreground rounded-full"></div>
+                <div class="absolute bottom-10 right-10 w-60 h-60 border border-primary-foreground rounded-full"></div>
+                <div class="absolute top-1/2 left-1/4 w-20 h-20 border border-primary-foreground rounded-full"></div>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-3xl mx-auto text-center">
+                    <div class="w-20 h-20 bg-primary-foreground/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8 animate-float">
+                        <i data-lucide="sparkles" class="h-10 w-10 text-primary-foreground"></i>
+                    </div>
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
+                        🔮 Our Vision
+                    </h2>
+
+                    <div class="space-y-6 text-primary-foreground/90 text-lg leading-relaxed">
+                        <p>
+                            We want teachers to spend more time <span class="font-semibold text-primary-foreground">"teaching students"</span> rather than doing paperwork.
+                        </p>
+                        <p>
+                            And we want AI to be a tool that <span class="font-semibold text-primary-foreground">helps teachers</span>, not replaces them.
+                        </p>
+                    </div>
+
+                    <div class="mt-10 p-6 bg-primary-foreground/10 backdrop-blur-sm rounded-2xl border border-primary-foreground/20">
+                        <p class="text-primary-foreground font-medium text-xl">
+                            AWA is designed to be<br />
+                            <span class="text-2xl font-bold">A Trusted Assistant</span><br />
+                            Lightening the workload while improving quality
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="py-20 bg-background">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                        Ready to Get Started?
+                    </h2>
+                    <p class="text-muted-foreground text-lg mb-8">
+                        Download AWA today and transform how you grade assignments.
+                    </p>
+
+                    <div class="bg-card rounded-2xl p-8 border border-border shadow-card mb-8">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 bg-success/10 text-success rounded-full text-sm font-medium mb-6">
+                            <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+                            Latest Version: v1.1.3
+                        </div>
+
+                        <div class="mb-8">
+                            <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.3/AWA_Setup_v1.1.3.exe"
+                               class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-hero hover:opacity-90 text-primary-foreground px-10 py-6 shadow-glow duration-300 hover:scale-105">
+                                <i data-lucide="download" class="mr-2 h-5 w-5"></i>
+                                Download AWA for Windows
+                            </a>
+                        </div>
+
+                        <div class="flex flex-wrap justify-center gap-6 text-muted-foreground text-sm">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="monitor" class="h-4 w-4"></i>
+                                <span>Windows 10/11</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="shield" class="h-4 w-4"></i>
+                                <span>No additional setup</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="zap" class="h-4 w-4"></i>
+                                <span>Ready to use instantly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-muted-foreground text-sm">
+                        100% Free • Secure Data • No Registration Required
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <footer class="py-8 bg-foreground">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-background mb-2">AWA</h3>
+                <p class="text-background/60 text-sm mb-4">
+                    Auto Writing Assistant — Intelligent grading assistant for modern teachers
+                </p>
+                <p class="text-background/40 text-xs">
+                    © 2025 AWA. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
-
-
