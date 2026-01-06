@@ -27,14 +27,23 @@
                         serif: ['Merriweather', 'Georgia', 'serif'],
                     },
                     colors: {
+                        // ================================
+                        //   THEME: Microsoft Teams-like
+                        //   (Keep oxford-* names to avoid changing HTML)
+                        // ================================
                         oxford: {
-                            blue: "#002147",
-                            light: "#f5f7fa",
-                            text: "#1f2937",
-                            muted: "#6b7280",
-                            border: "#e5e7eb"
+                            // Primary button / headings / accents
+                            blue: "#6264A7",     // Teams primary purple
+                            // Soft background sections
+                            light: "#F5F6FA",    // Teams-like light surface
+                            // Main text
+                            text: "#1F1F1F",
+                            // Muted text
+                            muted: "#6B6E99",
+                            // Borders
+                            border: "#E1E1F0"
                         },
-                        primary: "#002147", // Map primary to Oxford Blue
+                        primary: "#6264A7",
                     },
                     boxShadow: {
                         'card': "0 2px 8px rgba(0,0,0,0.04)",
@@ -63,7 +72,7 @@
         }
 
         .btn-primary {
-            @apply inline-flex items-center justify-center bg-oxford-blue text-white px-5 py-2.5 text-sm font-medium hover:bg-blue-900 transition-all duration-200 rounded-sm shadow-sm;
+            @apply inline-flex items-center justify-center bg-oxford-blue text-white px-5 py-2.5 text-sm font-medium hover:bg-[#464775] transition-all duration-200 rounded-sm shadow-sm;
         }
         
         .btn-outline {
@@ -91,7 +100,7 @@
                     <a href="#how-it-works" class="hover:text-oxford-blue transition-colors">How it Works</a>
                     <a href="#features" class="hover:text-oxford-blue transition-colors">Features</a>
                     <a href="#results" class="hover:text-oxford-blue transition-colors">Results</a>
-                    <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.7/AWA_Setup_1.1.7.exe" 
+                    <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.9/AWA_Setup_1.1.9.exe" 
                        class="btn-primary py-2 px-4">
                         <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download
                     </a>
@@ -120,9 +129,9 @@
                         </p>
                         
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.7/AWA_Setup_1.1.7.exe" 
+                            <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.9/AWA_Setup_1.1.9.exe" 
                                class="btn-primary">
-                                <i data-lucide="download" class="mr-2 h-4 w-4"></i> Download Free v1.1.7
+                                <i data-lucide="download" class="mr-2 h-4 w-4"></i> Download Free v1.1.9
                             </a>
                             <a href="#features" class="btn-outline">
                                 View Features <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
@@ -336,10 +345,10 @@
                 
                 <div class="bg-gray-50 border border-oxford-border rounded-sm p-8">
                     <div class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-bold uppercase rounded-full mb-6">
-                        Latest Version: v1.1.7
+                        Latest Version: v1.1.9
                     </div>
                     <br>
-                    <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.7/AWA_Setup_1.1.7.exe" 
+                    <a href="https://github.com/JakkrapatPhanomwattanasak/AWA_download_site/releases/download/v1.1.9/AWA_Setup_1.1.9.exe" 
                        class="btn-primary py-4 px-8 text-base">
                         <i data-lucide="download" class="mr-2 h-5 w-5"></i> Download AWA for Windows
                     </a>
@@ -367,6 +376,3 @@
     </script>
 </body>
 </html>
-
-
-
